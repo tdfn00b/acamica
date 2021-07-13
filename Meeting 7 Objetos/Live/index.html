@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Declarar un objeto
+        let usuario = {
+            nombre: 'David',
+            apellido:'Guerrero',
+            saludo: function () {
+                console.log('Hola!');
+                return this.nombre
+            }
+        }
+
+        let juan = {
+            nombre: 'Juan',
+            color_pelo: 'Castaño',
+            color_ojos: 'marrones',
+            peso: 88,
+            altura: 170,
+        }
+
+        console.log('Datos de Juan:')
+        console.log(juan)
+
+        let maria = {
+            nombre: 'Maria',
+            apellido: 'Gomez',
+            color_pelo: 'Negro',
+            color_ojos: 'Azules',
+            peso: 72,
+            altura: 168,
+        }
+
+        console.log ('Datos de Maria:')
+        console.log (maria.apellido)
+
+        // Clases de objetos es para crear una misma estructura.
+
+        class Personas {
+            constructor(nombre,apellido,color_ojos,color_pelo,altura,peso, nacimiento){
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.color_ojos = color_ojos;
+                this.color_pelo = color_pelo;
+                this.altura = altura;
+                this.peso = peso;
+                this.nacimiento = nacimiento;
+            }
+            //funciones
+            nombre_completo() {
+                return this.nombre + ' ' + this.apellido
+            }
+
+            altura_en_cm() {
+                return this.altura + ' cm.'
+            }
+            
+            //getter, recupera el valor de una propiedad
+            get_color_ojos() {
+                if(this.color_ojos == undefined){
+                    return 'Sin información'
+                } else {
+                    return this.color_ojos;
+                }
+            }
+
+            //setter, establece el valor de una propiedad
+            set_color_ojos(color) {
+                this.color_ojos = color;
+            }
+
+            edad() {
+                return 2021 - this.nacimiento
+            }
+        }
+        
+        let maria2 = new Personas('Maria','Gomez','Azules','Negro', 168, 72)
+        let juan2 = new Personas('Juan','Diaz',undefined,'Negro', 168, 72,1990)
+        
+        maria2.set_color_ojos('Verdes');
+
+        console.log(maria2.altura_en_cm());
+        console.log(maria2.nombre_completo());
+        console.log(maria2.get_color_ojos());
+        console.log(juan2.get_color_ojos());
+        console.log(juan2.edad())
+    </script>
+</body>
+</html>

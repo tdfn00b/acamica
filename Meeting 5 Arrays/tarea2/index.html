@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Autos</title>
+</head>
+<body>
+    <form action="">
+        <label for="">Marca: </label>
+        <input type="text" id="marca">
+        <br> <!-- Acá había usado submit en vez de button y me refrescaba la página-->
+        <input type="button" value="Agregar" onclick=agregarAuto()>
+        <input type="button" value="Remover Ultimo" onclick=popAuto()>
+        <input type="button" value="Remover Primero" onclick=shiftAuto()> 
+    </form>
+    <p>Lista de Autos:</p>
+    <p id="display">No hay elementos en la lista de autos.</p>
+    <br>
+    <h3 id="presentacion">No hay nada presentandose.</h3>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
