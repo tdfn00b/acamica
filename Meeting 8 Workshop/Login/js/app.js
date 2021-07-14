@@ -1,4 +1,4 @@
-//Crear lista vacía de usuarios
+//Crear lista vacía de usuarios (Van a ser del tipo objeto Usuario)
 let usuarios = [];
 
 //Función que crea usuarios
@@ -17,7 +17,6 @@ function crearUsuario() {
         console.log("No se puede crear el usuario");
         console.log("Todos los campos son requeridos");
         alert("Todos los campos son requeridos");
-        return
     }
 
     //Si el password no es el mismo en los dos capmos de input, no es puede hacer nada
@@ -25,10 +24,10 @@ function crearUsuario() {
         console.log("No se puede crear el usuario");
         console.log("Las contraseñas no coinciden");
         alert("Las contraseñas no coinciden");
-        return
     }
 
     //Como uso el arr.indexof() en objetos?
+    // Lista de elementos Atómicos / Primitivos es l
 
     // if (usuarios.indexOf(email) != -1) {
     //     console.log("No se puede crear el usuario");
@@ -51,16 +50,14 @@ function crearUsuario() {
             console.log("No se puede crear el usuario");
             console.log("El usuario ingresado ya existe");
             alert("El usuario ingresado ya existe");
-            return
         }
         if (email == usuarios[i].getEmail()) {
             console.log("No se puede crear el usuario");
             console.log("El email ingresado ya existe");
             alert("El email ingresado ya existe");
-            return
         }
-
     }
+
     //Crear un nuevo objeto usuario
     let nuevo_usuario = new Usuario(usuario, nombre, apellido, email, pais, pass)
 
@@ -77,7 +74,7 @@ function login() {
     //Recuperar información del html
     let logUser = document.getElementById("logusuario").value;
     let logPass = document.getElementById("logpass").value;
-    
+
     //Crear array para poder hacer el return
     let arrayIndex;
 
@@ -91,7 +88,7 @@ function login() {
                 console.log("El usuario " + logUser + " ha ingresado correctamente.");
                 console.log("Se encontro el usuario en el índice: " + arrayIndex);
                 alert("El usuario " + logUser + " ha ingresado correctamente.");
-                return arrayIndex; 
+                return arrayIndex;
             } else {
                 // Si no coincide el usuario o la contraseña, devolver un mensaje
                 console.log("Usuario o contraseña incorrectos");
