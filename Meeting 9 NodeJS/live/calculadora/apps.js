@@ -1,10 +1,17 @@
-let fs = require('fs');
+import fs from 'fs';
+import {sumar,restar,multiplicar,dividir} from './calculator.js';
 
-import {
-    sumar
-} from './calculator';
+let x = 1;
+let y = 0;
 
-let num1 = 5;
-let num2 = 4;
+let array = [
+sumar(x,y),
+restar(x,y),
+multiplicar(x,y),
+dividir(x,y)
+]
 
-fs.appendFileSync('./log.txt', sumar(num1, num2))
+array.forEach(element => {
+    console.log(element)
+    fs.appendFileSync('./log.txt', String(element) + '\n');
+});
