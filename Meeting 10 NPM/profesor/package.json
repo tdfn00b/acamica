@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "cool-images": "^1.0.3",
+    "express": "^4.17.1",
+    "node-env-file": "^0.1.8",
+    "nodemon": "^2.0.12"
+  },
+  "name": "aca-pruebas-sprint1-meeting10",
+  "version": "1.0.0",
+  "description": "Ejemplo de uso de npm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "acamica"
+  ],
+  "author": "Felipe Morales",
+  "license": "ISC"
+}
