@@ -13,7 +13,7 @@ function mostrarListaCelular() {
 function mitadListaCelular() {
     mitadLista = listaCelulares.length / 2;
     nuevaLista = listaCelulares.slice(0, mitadLista);
-    return nuevaLista
+    return nuevaLista //temporary return
 }
 
 function menorPrecio() {
@@ -24,7 +24,7 @@ function menorPrecio() {
             menorPrecio = listaCelulares[i].precio;
         }
     }
-    return menorPrecio
+    return menorPrecio //temporary return
 }
 
 function mayorPrecio() {
@@ -35,7 +35,7 @@ function mayorPrecio() {
             mayorPrecio = listaCelulares[i].get_precio();
         }
     }
-    return mayorPrecio
+    return mayorPrecio //temporary return
 }
 
 function listaGama() {
@@ -63,5 +63,5 @@ function listaGama() {
 
     let listaPorGamas = [gamaAlta, gamaMedia, gamaBaja];
 
-    return listaPorGamas;
+    return listaPorGamas; //temporary return
 }

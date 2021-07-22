@@ -61,15 +61,14 @@ class Celular {
     //Muestra por consola la lista de celulares linea por linae
     mostrarListaCelular() {
         console.log(listaCelulares)
-        return listaCelulares;
+        return listaCelulares; //temporary return
         }
 
     //Muestra la mitad de la lista de celulares
     mitadListaCelular() {
-        mitadLista = listaCelulares.length / 2;
-        nuevaLista = listaCelulares.slice(0, mitadLista);
+        nuevaLista = listaCelulares.slice(0, listaCelulares.length / 2);
         console.log(nuevaLista);
-        return nuevaLista;
+        return nuevaLista; //temporary return
     }
 
     menorPrecio() {
@@ -80,7 +79,7 @@ class Celular {
                 menorPrecio = listaCelulares[i].precio;
             }
         }
-        return menorPrecio
+        return menorPrecio //temporary return
     }
 
     mayorPrecio() {
@@ -91,7 +90,7 @@ class Celular {
                 mayorPrecio = listaCelulares[i].get_precio();
             }
         }
-        return mayorPrecio
+        return mayorPrecio //temporary return
     }
 
     listaGama() {
@@ -119,7 +118,7 @@ class Celular {
 
         let listaPorGamas = [gamaAlta, gamaMedia, gamaBaja];
 
-        return listaPorGamas;
+        return listaPorGamas; //temporary return
     }
 
 }

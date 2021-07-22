@@ -1,0 +1,14 @@
+{
+  "name": "lectura",
+  "version": "1.0.0",
+  "description": "para leer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Guerrero",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
