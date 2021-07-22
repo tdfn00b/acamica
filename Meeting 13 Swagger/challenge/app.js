@@ -9,7 +9,7 @@ import {
 
 import {
     Libro
-} from './libro.js'
+} from 'Meeting 13 Swagger\challenge\libro.js'
 
 const app = express();
 app.use(morgan);
@@ -35,7 +35,7 @@ function escritorLibroExiste(req, res, next) {
 		next();
 	}
 	else {
-		res.json(`El libro no existe`)
+		res.json(`El libro no existe en este autor`)
 	}
 }
 
