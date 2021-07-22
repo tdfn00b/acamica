@@ -1,3 +1,5 @@
+//FALTA TERMINAR
+
 let listaCelulares = [];
 
 class Celular {
