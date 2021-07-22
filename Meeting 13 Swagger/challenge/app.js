@@ -1,6 +1,8 @@
+//FALTA TERMINAR
 const express = require('express');
 const morgan = require('morgan');
 
+//???
 import {
     Escritor
 } from './escritor.js'
@@ -37,6 +39,7 @@ function escritorLibroExiste(req, res, next) {
 	}
 }
 
+//Usar la clase Escritor cuando se pueda.
 let escritores = [{
     id: 1,
     nombre: "Jorge Luis",
@@ -147,7 +150,7 @@ app.get('/autores/:id/libros/:idLibro', escritorLibroExiste, function (req, res)
 //PUT que modifica el libro con el id indicado del autor
 app.put('/autores/:id/libros/:idLibro', escritorLibroExiste, function (req, res) {
     let id = req.params.id;
-    let idLibro = req.body.idLibro;
+    let idLibro = req.params.idLibro;
 
     let titulo = req.body.titulo;
     let descripcion = req.body.descripcion;
