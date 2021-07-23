@@ -6,7 +6,6 @@ class Escritor {
         this.fechaNacimiento = fechaNacimiento;
         this.libros = libros;
     }
-
 }
 
-export {Escritor};
+module.exports = {Escritor};

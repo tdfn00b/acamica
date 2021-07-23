@@ -1,18 +1,15 @@
-//FALTA TERMINAR
+//Importando cosas
+
+//import { Escritor } from "./escritor.js";
+//import { Libro } from "./libro.js";
+const {Escritor} = require('./escritor')
+const {Libro} = require('./libro')
+
 const express = require('express');
-const morgan = require('morgan');
-
-//???
-import {
-    Escritor
-} from './escritor.js'
-
-import {
-    Libro
-} from 'Meeting 13 Swagger\challenge\libro.js'
+//const morgan = require('morgan');
 
 const app = express();
-app.use(morgan);
+//app.use(morgan);
 
 // Middleware que valida si el escritor existe en tu array
 function escritorExisteID(req, res, next) {
@@ -29,7 +26,7 @@ function escritorExisteID(req, res, next) {
 
 function escritorLibroExiste(req, res, next) {
     let id = req.params.id;
-    let idLibro = req.body.idLibro;
+    let idLibro = req.idLibro;
 
 	if (escritores[id].libros[idLibro]) {
 		next();
@@ -39,7 +36,7 @@ function escritorLibroExiste(req, res, next) {
 	}
 }
 
-//Usar la clase Escritor cuando se pueda.
+//TODO: Usar la clase Escritor cuando se pueda.
 let escritores = [{
     id: 1,
     nombre: "Jorge Luis",
@@ -77,13 +74,13 @@ app.get("/autores", function (req, res) {
 
 //POST para crear un nuevo escritor
 app.post("/autores", function (req, res) {
-    let nombre = req.body.nombre;
-    let apellido = req.body.apellido;
-    let fechaNacimiento = req.body.fechaDeNacimiento;
-    let libros = req.body.libros
+    let nombre = req.nombre;
+    let apellido = req.apellido;
+    let fechaNacimiento = req.fechaDeNacimiento;
+    let libros = req.libros
     let id = escritores.length + 1
     nuevoAutor = new Escritor(id, nombre, apellido, fechaNacimiento, libros);
-    res.json("Autor agregado")
+    res.json(`El autor ${nuevoAutor.nombre} fue agregado.`)
 });
 
 //GET que devuelve el autor con el ID indicado
@@ -103,9 +100,9 @@ app.delete("/autores/:id", escritorExisteID, function (req, res) {
 // PUT que modifica el autor con el id indicado
 app.put("/autores/:id", escritorExisteID, function (req, res) {
     let id = req.params.id;
-    let nombre = req.body.nombre;
-    let apellido = req.body.apellido;
-    let fechaNacimiento = req.body.fechaDeNacimiento;
+    let nombre = req.nombre;
+    let apellido = req.apellido;
+    let fechaNacimiento = req.fechaDeNacimiento;
     if (nombre) {
         escritores[id].nombre = nombre
     }
@@ -130,9 +127,9 @@ app.get('/autores/:id/libros', escritorExisteID, function (req, res) {
 app.post('/autores/:id/libros', escritorExisteID, function (req, res) {
     let id = req.params.id;
     let idLibro = escritores[id].libros.length() + 1
-    let titulo = req.body.titulo
-    let descripcion = req.body.descripcion
-    let publicacion = req.body.publicacion
+    let titulo = req.titulo
+    let descripcion = req.descripcion
+    let publicacion = req.publicacion
     nuevoLibro = new Libro(idLibro, titulo, descripcion, publicacion)
     escritores[id].libros.push(nuevoLibro)
 
@@ -142,7 +139,7 @@ app.post('/autores/:id/libros', escritorExisteID, function (req, res) {
 // GET que devuelve el libro con el id indicado del autor
 app.get('/autores/:id/libros/:idLibro', escritorLibroExiste, function (req, res) {
     let id = req.params.id;
-    let idLibro = req.body.idLibro;
+    let idLibro = req.idLibro;
     libro = escritores[id].libros[idLibro]
     res.json(libro)
 });
@@ -152,26 +149,24 @@ app.put('/autores/:id/libros/:idLibro', escritorLibroExiste, function (req, res)
     let id = req.params.id;
     let idLibro = req.params.idLibro;
 
-    let titulo = req.body.titulo;
-    let descripcion = req.body.descripcion;
-    let publicacion = req.body.publicacion;
+    if (req.titulo) {
+        tituloAnterior = escritores[id].libros[idLibro].titulo
+        escritores[id].libros[idLibro].titulo = req.titulo
+    }
+    if (req.descripcion) {
+        escritores[id].libros[idLibro].descripcion = req.descripcion
+    }
+    if (req.publicacion) {
+        escritores[id].libros[idLibro].publicacion = req.publicacion
+    }
 
-    if (titulo) {
-        escritores[id].libros[idLibro].titulo = titulo
-    }
-    if (descripcion) {
-        escritores[id].libros[idLibro].descripcion = descripcion
-    }
-    if (publicacion) {
-        escritores[id].libros[idLibro].publicacion = publicacion
-    }
-    res.json(`El ${escritores[id].libros[idLibro].titulo} fue modificado`)
+    res.json(`El ${tituloAnterior} fue modificado por ${escritores[id].libros[idLibro].titulo}`)
 });
 
 //DELETE que elimina el libro con el id indicado del autor
 app.delete('/autores/:id/libros/:idLibro', escritorLibroExiste, function (req, res) {
     let id = req.params.id;
-    let idLibro = req.body.idLibro;
+    let idLibro = req.idLibro;
     let libroEliminado = escritores[id].libros.splice(idLibro, 1)
     escritores[id].libros.splice(idLibro, 1)
     res.json(`El ${libroEliminado} fue modificado`)

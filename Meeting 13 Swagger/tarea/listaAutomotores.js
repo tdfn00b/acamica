@@ -1,0 +1,2 @@
+listaAutomotores = []
+module.exports = listaAutomotores;

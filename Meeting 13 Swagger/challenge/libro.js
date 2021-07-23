@@ -7,4 +7,4 @@ class Libro {
     }
 }
 
-export {Libro};
+module.exports = {Libro};
