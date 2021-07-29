@@ -170,7 +170,7 @@ app.delete('/autores/:id/libros/:idLibro', escritorLibroExiste, function (req, r
     let libroEliminado = escritores[id].libros.splice(idLibro, 1)
     escritores[id].libros.splice(idLibro, 1)
     res.json(`El ${libroEliminado} fue modificado`)
-});
+}) ;
 
 //Inicio server
 let port = 3000;

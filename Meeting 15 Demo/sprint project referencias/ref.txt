@@ -1,0 +1,59 @@
+Para crear un nuevo usuario se requiere:
+-nombre de usuario
+    -No pueden haber nombres de usuario duplicados
+-nombre y apellido
+-correo electrónico
+    -No pueden haber emails duplicados
+-teléfono
+-direccion de envio
+-contraseña
+    - Tiene que repetir la contraseña
+
+Para loguear un usuario requiere:
+-Usuario o correo electrónico
+-contraseña
+
+Un usuario,
+Para realizar un nuevo pedido requiere:
+- Estado de usuario: logueado
+- Seleccionar productos de una lista de productos
+- Cargar productos a una lista de pedidos.
+- Ver el precio total del pedido
+- Seleccionar medio de pago para el pedido
+- Seleccionar otra dirección de destino a su pedido
+    -Por defecto selecciona la dirección que se encuentra en el usuario.
+- Ver historial de pedidos previos
+- Confirmar el pedido
+    -Una vez confirmado se puede dar de baja si el estado del pedido no es "en envío"
+    -No se puede modificar una vez que 
+- Cancelar un pedido
+    -Depende del estado del pedido.
+
+
+
+Los administradores pueden:
+- Ver todos los pedidos.
+- Cambiar el estado de los pedidos.
+- Dar de alta nuevos productos
+- Editar productos.
+- Eliminar productos.
+- Crear nuevos medios de pago.
+- Editar medios de pago.
+- Borrar medios de pago.
+
+
+Los estados mínimos de los pedidos deben ser:
+    - Pendiente: cuando el usuario inicia su pedido.
+    - Confirmado: cuando el usuario cierra su pedido.
+    - En preparación: cuando el administrador comienza a preparar el pedido.
+    - Enviado: cuando el administrador envía el pedido.
+    - Entregado: cuando el administrador entrega el pedido.
+
+- Cuando un usuario edita un pedido debe validar:
+    - poder cambiar la cantidad de un producto seleccionado.
+    - poder eliminar un producto seleccionado.
+    - poder agregar un producto nuevo.
+    - no debe poder editar el nombre y precio de un producto.
+- Cuando un administrador edita un producto debe:
+    - poder cambiar el nombre del producto.
+    - poder cambiar el precio del producto.

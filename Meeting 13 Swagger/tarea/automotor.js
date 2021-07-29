@@ -1,5 +1,6 @@
 class Automotor {
-    constructor(marca, modelo,fechaFabricacion,cantidadPuertas, disponibleVenta){
+    constructor(id, marca, modelo,fechaFabricacion,cantidadPuertas, disponibleVenta){
+            this.id = id;
             this.marca = marca;
             this.modelo = modelo;
             this.fechaFabricacion = fechaFabricacion;

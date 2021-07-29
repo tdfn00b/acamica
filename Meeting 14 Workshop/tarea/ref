@@ -1,0 +1,57 @@
+Usuarios
+Crea los Endpoints correspondientes para la
+gestión de usuarios.
+Condición: deben poder darse de alta, baja,
+modificar y eliminar usuarios
+
+Registrar un nuevo usuario
+POST /users
+
+Modificar un usuario existente
+PUT /users/:id
+
+Eliminar o dar de baja un usuario existente
+DELETE /users/:id
+
+Condicion: Que el usuario logueado sea el mismo que el usuario que se quiere dar de baja.
+
+
+Tópicos
+Crea los Endpoints correspondientes para la
+gestión de tópicos.
+Condición: deben poder darse de alta, baja,
+modificar y eliminar tópicos.
+
+Dar de alta un nuevo topico
+POST
+/topic
+
+Modificar un topico
+PUT
+/topic/:topic_id
+ 
+Condición: que el usuario que quiere modificar el topico sea el usuario creador del topico.
+
+Dar de baja un topico
+DELETE
+/topic/:topic_id
+
+Condición: que el usuario que quiere modificar el topico sea el usuario creador del topico.
+
+Comentarios
+Crea los Endpoints correspondientes para la
+gestión de comentarios.
+Condición: deben poder darse de alta, baja,
+modificar y eliminar comentarios.
+
+Dar de alta un comentario.
+/POST
+/topic/:topic_id/comments
+
+Modificar un comentario.
+/PUT
+/topic/:topic_id/comments/:post_id
+
+Eliminar o dar de baja un comentario.
+/DELETE
+/topic/:topic_id/comments/:post_id
