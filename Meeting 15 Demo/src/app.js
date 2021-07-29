@@ -125,7 +125,10 @@ app.get('/users/logout', (req,res) =>{
 app.post('/users/:user_id/orders',isLoggedIn,(req,res) => {
     //TODO: no permitir abrir otro pedido si ya hay un pedido en estado pendiente(1)
     // haciendo
-    let order = orderList.find(orders => orders.user == req.user.user)
+    console.log(req.user.nickname)
+    //console.log(orderList)
+    let order = orderList.find(asd => asd.user.nickname == req.user.nickname)
+    console.log(order)
     if (order) {
         if (order.status == 1) { 
             res.send('Tiene otro pedido pendiente')
