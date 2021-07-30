@@ -188,3 +188,13 @@ let port = 3000;
 app.listen(port, () => {
     console.log(`Servidor iniciado. Escuchando el puerto ${port}.`)
 });
+
+//TODO investigar como usar router para tener este archivo más organizado
+//Investigar ERROR / ERR
+//No es correcto que los endpoints usen varibles del usuario en la URL
+//Aunque no pensaba en que el ENDPOINT se veía en el URL.
+//TODO buscar como buscar esto ja
+
+
+//Usar POST para el LOGOUT
+//Investigar los VERBOS y lo que hacen
