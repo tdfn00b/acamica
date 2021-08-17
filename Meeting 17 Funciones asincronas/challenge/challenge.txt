@@ -1,0 +1,16 @@
+Encontré una página con varias API gratis:
+https://rapidapi.com/collection/list-of-free-apis
+
+Destaco de la página:
+
+Shazam
+Identify any song. Discover, artists, lyrics, videos & playlists
+https://rapidapi.com/apidojo/api/shazam/
+
+Google Translate
+Translates input text, returning translated text
+https://rapidapi.com/googlecloud/api/google-translate1/
+
+Text-to-Speech
+Converts textual content to audio content
+https://rapidapi.com/voicerss/api/text-to-speech-1/

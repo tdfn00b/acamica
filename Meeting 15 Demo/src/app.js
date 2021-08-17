@@ -7,8 +7,8 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
-            title: 'Meeting 15 - Demo',
-            version: '1.0.0'
+            title: 'Sprint Project 01',
+            version: '1.0.1'
         }
     },
     apis: ['./app.js'],
@@ -20,7 +20,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 const {User} = require('./demo')
 const {Product} = require('./demo')
 const {Order} = require('./demo')
-let {isLoggedIn, orderStatus} = require('./middlewares');
+let {isLoggedIn, orderStatus, hasPrivileges} = require('./middlewares');
 
 let {userList, productList, orderList} = require('./init');
 let {logList} = require('./demo')
@@ -48,7 +48,7 @@ app.get('/products', (req, res) => {
 //Lista de Ordenes
 app.get('/orders/:user_id', isLoggedIn,(req, res) => {
     if(req.user.getPrivileges() <= 2){
-        res.send('No puedes ver esta página')
+        return res.send('No puedes ver esta página')
     } else {
     res.json(orderList);}
 });
@@ -61,127 +61,175 @@ app.get('/login', (req, res) => {
 
 //Registro de usuario
 app.post('/users/register', (req, res) => {
-    //Agrega un usuario.
-    //Devuelve el usuario agregado.
-    const {nickname,pass,pass2, full_name, phone_number, email, address} = req.body;
-    if (!nickname || !pass || !full_name || !phone_number || !email || !address) {
-        res.status(404).json({"respuesta":"Por favor, completa todos los campos."})
-        return;
-    }
+    //Parse information from the request.
+    const {username, pass, full_name, phone_number, email, address} = req.body;
 
-    if (pass != pass2){
-        res.status(404).json({"respuesta":"Las contraseñas no coinciden."})
-        return;
-    }
+    //Check if the email or used is already in the database.
+    if (userList.find(user => user.email == email || user.username == username)) {
+        return res.status(404).json({"respuesta" : "El nombre de usuario o email ya está registrado."});
+    };
 
-    if (pass.length < 4 ){
-        res.status(404).json({"respuesta":"Tu contraseña tiene que tener más de 4 caracteres o no."})
-        return;
-    }
-
-    if (userList.find(user => user.email == email || user.nickname == nickname)) {
-        res.status(404).json({"respuesta" : "El nombre de usuario o email ya está registrado."})
-        return;
-    }
-
-    newUser = new User(nickname,pass,full_name,phone_number,email,address)
-    userList.push(newUser);
+    //Create a new Object User
+    newUser = new User(username,pass,full_name,phone_number,email,address);
     
-    res.send(newUser);
+    //Push the new Object User to the registered user list.
+    userList.push(newUser);
+    res.send(`El usuario ${newUser.username} ha sido creado existosamente`);
 });
 
 //Inicio de sesión
 app.post('/users/login',(req, res) => {
+    //Parse information from the request.
     const {userLog, passLog} = req.body;
-    
+
+    //Check if there is an user logged in.
     if (logList[0]){
-        res.send(`Cierra la sesión actual para continuar.`)
-        return;
+        return res.send(`Cierra la sesión actual para continuar.`)
     }
 
-    user = userList.find(user => (user.email == userLog || user.nickname == userLog) && (user.pass == passLog))
-    
-    if(user){
+    //Find a match for the user email or username in the registered users database
+    userID = userList.findIndex(user => (user.email == userLog || user.username == userLog));
+    user = userList[userID];
+
+    //If the user exists, check if the password is correct, and add the user to the logged user lists.
+    if(userList[userID].pass == passLog){
         logList.push(user);
-        res.send(`Has iniciado sesión.`);
-        return;
+        return res.send(`Has iniciado sesión con el ID ${userID}`);
     } else {
-        res.status(404).json({"respuesta" : "El nombre de usuario o contraseña son incorrectos."})
+        return res.status(404).json({"respuesta" : "El nombre de usuario o contraseña son incorrectos."})
     }
 });
 
 //Cerrado de sesión
-app.get('/users/logout', (req,res) =>{
+app.post('/users/logout', (req,res) =>{
+    //Check if there is an user logged in.
     if (!logList[0]){
-        res.send('No has iniciado sesión.')
+        return res.send('No has iniciado sesión.')
     }
-
-    usuario = logList[0].nickname
+    //If there is an user logged in, remove the user from the list.
+    usuario = logList[0].username
     logList.pop()
     res.send(`${usuario} has cerrado la sesión.`)
 })
 
 //Realizar pedido
-app.post('/users/:user_id/orders',isLoggedIn,(req,res) => {
-    //TODO: no permitir abrir otro pedido si ya hay un pedido en estado pendiente(1)
-    // haciendo
-    console.log(req.user.nickname)
-    //console.log(orderList)
-    let order = orderList.find(asd => asd.user.nickname == req.user.nickname)
-    console.log(order)
+app.post('/orders/', isLoggedIn,(req,res) => {
+    //Check if the user has a pending order, if it does, don't allow to open a new one.
+    order = orderList.find(order => order.user.username == req.user.username)
     if (order) {
         if (order.status == 1) { 
-            res.send('Tiene otro pedido pendiente')
-            return;
+            return res.send('Tiene otro pedido pendiente.')
         }
     }
 
-    const {payment_method} = req.body;
-    newOrder = new Order(req.user, payment_method)
+    //Parse information from the request.
+    const {paymenthMethod} = req.body
+
+    //Create a new Object Order with the user and it's address and add it to the orders database.
+    newOrder = new Order(req.user, paymenthMethod, req.user.address)
     orderList.push(newOrder);
-    res.send(`El usuario ${req.user.nickname} ha comenzado un pedido.`)
+    res.send(`El usuario ${req.user.username} ha comenzado un pedido.`)
 });
 
-//Agregar productos a un pedido no confirmado
-app.post('/users/:user_id/orders/:order_number', isLoggedIn, orderStatus,(req,res) => {
-    //1 = Pendiente, 2 = Confirmado, 3 = En preparación, 4 = Enviado, 
-    //5 = Entregado, 100 = Rechazado
+//Agregar un producto a un pedido no confirmado
+app.post('/orders/:order_number', isLoggedIn, orderStatus,(req,res) => {
+    //1 = Pendiente, 2 = Confirmado, 3 = En preparación, 4 = Enviado, 5 = Entregado, 100 = Rechazado
+
+    //Checks the current status of the order
     if (req.status == 100) {
-        res.send('Su pedido fue rechazado.')
+        return res.send('Su pedido fue rechazado.')
     }
 
     if (req.status >= 2) {
-        res.send('No puede modificar el pedido.')    
+        return res.send('No puede modificar el pedido.')    
     }
 
+    //Parse information from the request.
     const {product, qty} = req.body;
 
-    orderList[req.order_index].addProduct(product,qty)
+    //Add the product to the order.
+    orderList[req.order_index].addProduct(product, qty)
     res.send(`Producto agregado`)
 });
 
 //Cancelar pedido
-app.delete('/users/:user_id/orders/:order_number',isLoggedIn, orderStatus, (req,res) => {
-    //1 = Pendiente, 2 = Confirmado, 3 = En preparación, 4 = Enviado, 
-    //5 = Entregado, 100 = Rechazado
-    if (res.status >= 4) {
-        res.send(`No es posible cancelar el pedido número ${res.order.orderNumber}.`)
-    } 
-    orderList.splice(req.order_index,1)
+app.delete('orders/:order_number',isLoggedIn, orderStatus, (req,res) => {
+    //If the status of the order is already sended or more
+    //it's not possible to cancel the order as an User.
+    //privileges: 1 - usuario, 2 - manager, 3 - admin
+    if (req.user.getPrivileges() > 1){
+        //order status: 1 = Pendiente, 2 = Confirmado, 3 = En preparación, 4 = Enviado, 5 = Entregado, 100 = Rechazado
+        if (res.status >= 4) {
+            return res.send(`No es posible cancelar el pedido número ${res.order.orderNumber}.`)
+        } 
+    }
+
+    orderList[req.order_index].deleted = 1
     res.send('Su pedido fue cancelado.')
 });
 
-//Ver pedido
-app.get('/users/:user_id/orders/:order_number',isLoggedIn, orderStatus, (req,res) => {
-    res.json(orderList[req.order_index])
+//Ver historial de pedidos completados.
+app.get('/orders',isLoggedIn, (req, res) => {
+    //Parse information from request
+    let ordersFromUser = orderList.getOrdersByStatus(req.user)
+
+    //Check if the orders of the current user is empty
+    if (ordersFromUser.length == 0){
+        return res.send(`No hay ordenes para mostrar.`)
+    }
+
+    res.send(ordersFromUser)
 });
 
 //Confirmar pedido 
-app.put('/users/:user_id/orders/:order_number',isLoggedIn, orderStatus,(req,res) => {
+app.put('/orders/:order_number',isLoggedIn, orderStatus,(req,res) => {
     const {newStatus} = req.body;
     orderList[req.order_index].setStatus(req.user, newStatus);
     res.send('Su pedido fue confirmado');
 });
+
+//Cambiar cantidad de un producto seleccionado... IMPORTANTE
+app.patch('/orders/:order_number/:product_id',isLoggedIn, orderStatus, (req,res) => {
+    let productNumber = req.params.product_id;
+    productIndex = ""
+    orderList[req.order_index].orderProducts[productIndex];
+
+});
+
+//Cambiar nombre de un producto, solo como administrador
+app.patch('',isLoggedIn, (req,res) => {
+
+});
+
+//Cambiar el precio de un producto,  solo como administrador
+app.patch('',isLoggedIn, (req,res) => {
+
+});
+
+//Crear nuevos medios de pagos
+app.post('/payments',isLoggedIn, hasPrivileges, (req,res) => {
+
+});
+
+//Editar medios de pago
+app.put('/payments/:payments_id',isLoggedIn, hasPrivileges, (req,res) => {
+
+});
+//Borrar medios de pago
+app.delete('/payments/:payments_id',isLoggedIn, hasPrivileges, (req,res) => {
+
+});
+//Ver todos los medios de pago
+app.get('/payments',isLoggedIn, hasPrivileges, (req,res) => {
+
+});
+
+//Ver pedido
+app.get('/orders/:order_number',isLoggedIn, orderStatus, (req,res) => {
+    res.json(orderList[req.order_index])
+});
+
+
 
 //Inicio server
 let port = 3000;
@@ -195,6 +243,4 @@ app.listen(port, () => {
 //Aunque no pensaba en que el ENDPOINT se veía en el URL.
 //TODO buscar como buscar esto ja
 
-
-//Usar POST para el LOGOUT
 //Investigar los VERBOS y lo que hacen

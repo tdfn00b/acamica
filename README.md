@@ -1,1 +1,1 @@
-# Acámica Sprint 1
+# Acámica

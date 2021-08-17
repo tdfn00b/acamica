@@ -1,41 +1,42 @@
-Para crear un nuevo usuario se requiere:
--nombre de usuario
-    -No pueden haber nombres de usuario duplicados
--nombre y apellido
--correo electrónico
-    -No pueden haber emails duplicados
--teléfono
--direccion de envio
--contraseña
-    - Tiene que repetir la contraseña
+Para crear un nuevo usuario se requiere: (LISTO)
+-nombre de usuario (LISTO)
+    -No pueden haber nombres de usuario duplicados  (LISTO)
+-nombre y apellido (LISTO)
+-correo electrónico (LISTO)
+    -No pueden haber emails duplicados (LISTO)
+-teléfono (LISTO)
+-direccion de envio (LISTO)
+-contraseña (LISTO)
+    - Tiene que repetir la contraseña (LISTO) (VERIFICAR POR QUÉ ESTO ESTABA PARA PONER EN EL BACKEND)
 
 Para loguear un usuario requiere:
--Usuario o correo electrónico
--contraseña
+-Usuario o correo electrónico (LISTO)
+-contraseña (LISTO)
 
 Un usuario,
 Para realizar un nuevo pedido requiere:
-- Estado de usuario: logueado
-- Seleccionar productos de una lista de productos
-- Cargar productos a una lista de pedidos.
-- Ver el precio total del pedido
+- Estado de usuario: logueado (LISTO)
+- Seleccionar productos de una lista de productos (LISTO)
+- Cargar productos a una lista de pedidos. (LISTO)
+- Ver el precio total del pedido (LISTO)
 - Seleccionar medio de pago para el pedido
 - Seleccionar otra dirección de destino a su pedido
-    -Por defecto selecciona la dirección que se encuentra en el usuario.
-- Ver historial de pedidos previos
-- Confirmar el pedido
+    -Por defecto selecciona la dirección que se encuentra en el usuario. (LISTO)
+- Confirmar el pedido (LISTO)
     -Una vez confirmado se puede dar de baja si el estado del pedido no es "en envío"
     -No se puede modificar una vez que 
-- Cancelar un pedido
+- Cancelar un pedido (LISTO)
     -Depende del estado del pedido.
+
+- Ver historial de pedidos previos
 
 
 
 Los administradores pueden:
-- Ver todos los pedidos.
-- Cambiar el estado de los pedidos.
-- Dar de alta nuevos productos
-- Editar productos.
+- Ver todos los pedidos.  (LISTO)
+- Cambiar el estado de los pedidos.  (LISTO)
+- Dar de alta nuevos productos.  (LISTO)
+- Editar productos. 
 - Eliminar productos.
 - Crear nuevos medios de pago.
 - Editar medios de pago.
@@ -43,17 +44,51 @@ Los administradores pueden:
 
 
 Los estados mínimos de los pedidos deben ser:
-    - Pendiente: cuando el usuario inicia su pedido.
-    - Confirmado: cuando el usuario cierra su pedido.
-    - En preparación: cuando el administrador comienza a preparar el pedido.
-    - Enviado: cuando el administrador envía el pedido.
-    - Entregado: cuando el administrador entrega el pedido.
+    - Pendiente: cuando el usuario inicia su pedido.  (LISTO)
+    - Confirmado: cuando el usuario cierra su pedido.  (LISTO)
+    - En preparación: cuando el administrador comienza a preparar el pedido.  (LISTO)
+    - Enviado: cuando el administrador envía el pedido.  (LISTO)
+    - Entregado: cuando el administrador entrega el pedido.  (LISTO)
 
 - Cuando un usuario edita un pedido debe validar:
     - poder cambiar la cantidad de un producto seleccionado.
     - poder eliminar un producto seleccionado.
     - poder agregar un producto nuevo.
     - no debe poder editar el nombre y precio de un producto.
+    
 - Cuando un administrador edita un producto debe:
     - poder cambiar el nombre del producto.
     - poder cambiar el precio del producto.
+
+45 puntos para aprobar
+
+Puntos:
+Registro y Login - 6 total
+3 - [+] Los usuarios puedan crear una cuenta en la aplicación.
+3 - [+] Los usuarios puedan hacer login con su usuario y contraseña.
+
+Pedidos - 11 total
+3 - [] Los usuarios registrados puedan realizar pedidos de los productos que desean consumir
+3 - [] Los usuarios registrados puedan ver el historial de sus pedidos.
+5 - [] Los administradores puedan ver todos los pedidos y cambiar el estado de los mismos.
+
+Productos - 14 total
+3 - [] Los usuarios administradores puedan dar de alta nuevos productos.
+8 - [] Los usuarios administradores puedan editar un producto.
+3 - [] Los usuarios administradores puedan eliminar un producto.
+
+Documentación - 9 total
+5 - [] Tener la documentación de la API con Swagger
+3 - [] Tener el código de fuente en GitHub
+1 - [] Tener el README.md con las instrucciones de instalación.
+
+Requerimientos Adicionales - 36 total
+3 - [] Que no hayan emails duplicados en el registro
+2 - [] Que los usuarios puedan seleccionar medios de pago.
+1 - [] Que los administradores puedan crear nuevos medios de pago.
+8 - [] Que los administradores puedan editar medios de pago.
+3 - [] Que los administradores puedan borrar medios de pago.
+1 - [] Que los administradores puedan ver todos los medios de pago.
+3 - [] Que los usuarios puedan agregar una dirección de destino de su pedido.
+13 - [] Que los usuarios puedan modificar su pedido mientras no lo hayan cerrado.
+2 - [] Que los usuarios no puedan modificar su pedido una vez que lo hayan cerrado.

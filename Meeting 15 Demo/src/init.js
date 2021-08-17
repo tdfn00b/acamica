@@ -1,7 +1,8 @@
 const {User} = require('./demo')
 const {Product} = require('./demo')
 const {Order} = require('./demo')
-let {userList, productList, orderList} = require('./demo');
+const {PaymentMethod} = require('./demo')
+let {userList, productList, orderList, paymentMethodList} = require('./demo');
 
 //Creo usuarios
 let admin = new User("admin","admin", null, null, "superadmin@supermail.com", null);
@@ -25,10 +26,18 @@ productList.push(new Product("Hamburguesa clásica", "Hamburguesa con queso, lec
 productList.push(new Product("Ensalada Veggie", "Hamburguesa con lechuga, tomate y sin hamburguesa", 300))
 productList.push(new Product("Coca-Cola 1L", "Coca-Cola sabor original de 1 litro", 120, true))
 
+//Creo y agrego métodos de pago
+
+let efectivo = new PaymentMethod("EF", "Efectivo")
+let debito = new PaymentMethod("TD", "Tarjeta Debito")
+
+paymentMethodList.push(efectivo)
+paymentMethodList.push(debito)
+
 //Creo ordenes
-let order1 = new Order(user1, "Efectivo");
-let order2 = new Order(user2, "Efectivo");
-let order3 = new Order(user3, "Tarjeta Debito");
+let order1 = new Order(user1, efectivo, user1.address);
+let order2 = new Order(user2, efectivo, user2.address);
+let order3 = new Order(user3, debito, user3.address);
 
 //Agrego productos a las ordenes
 order1.addProduct(1, 3)
@@ -41,4 +50,4 @@ orderList.push(order1)
 orderList.push(order2)
 orderList.push(order3)
 
-module.exports = {userList, productList, orderList}
+module.exports = {userList, productList, orderList, paymentMethodList}
