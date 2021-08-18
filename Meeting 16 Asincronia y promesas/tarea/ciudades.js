@@ -49,6 +49,14 @@ const obtener_temperatura = async (ciudad) => {
 //Creo endpoint para recuperar las tres ciudades aleatorias
 app.get("/ciudades", async (req,res) => {
         try{
+            let respuesta
+            for (let index = 0; index < cantidad_ciudades; index++) {
+
+                respuesta.push({"Ciudad":ciudades_aleatorias[index],
+            
+            })
+            }
+/* 
             let respuesta = {
                 "Ciudad1" : ciudades_aleatorias[0],
                 "Temperatura1" : await obtener_temperatura(ciudades_aleatorias[0]),
@@ -56,7 +64,7 @@ app.get("/ciudades", async (req,res) => {
                 "Temperatura2" : await obtener_temperatura(ciudades_aleatorias[1]),
                 "Ciudad3" : ciudades_aleatorias[2],
                 "Temperatura3" : await obtener_temperatura(ciudades_aleatorias[2]),
-            }
+            } */
             console.log (ciudades_aleatorias)
             res.json({respuesta})
         } catch (error) {
