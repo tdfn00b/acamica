@@ -7,7 +7,7 @@ const port = 3000;
 const fetch = require('node-fetch')
 
 //Variables a usar
-const ciudades = ["Londres", "Lima", "Dhaka", "Buenos Aires", "El Cairo", "Beijing", "Manila", "Delhi", "Jacarta","Tokyo"]
+const ciudades = ["Londres", "Lima", "Dhaka", "Buenos Aires", "El Cairo", "Beijing", "Manila", "Delhi", "Tokyo"]
 const to = ciudades.length
 const cantidad_ciudades = 3
 
@@ -36,7 +36,7 @@ function obtener_temperatura(ciudad){
 }
  */
 
-const obtener_temperatura = async (ciudad)=> {
+const obtener_temperatura = async (ciudad) => {
     const endpoint = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=050a18086ca65d0d012464b72c6e4d15&units=metric`;
     const res = await fetch(endpoint);
     const temp = await res.json();
@@ -58,10 +58,10 @@ app.get("/ciudades", async (req,res) => {
                 "Temperatura3" : await obtener_temperatura(ciudades_aleatorias[2]),
             }
             console.log (ciudades_aleatorias)
-            return res.json({respuesta})
+            res.json({respuesta})
         } catch (error) {
-            res.json({error})
             console.log(error);
+            res.json({error})
         } 
 })
 
