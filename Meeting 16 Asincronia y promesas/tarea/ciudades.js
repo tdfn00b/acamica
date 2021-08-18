@@ -3,8 +3,11 @@ const express = require("Express");
 const app = express();
 const port = 3000;
 
+//Importo módulo Fetch
+const fetch = require('node-fetch')
+
 //Variables a usar
-const ciudades = ["Londres", "Lima", "Dhaka", "Buenos Aires", "El Cairo", "Beijing", "Manila", "Delhi", "Ciudad de México", "Seúl","Jacarta","Tokyo"]
+const ciudades = ["Londres", "Lima", "Dhaka", "Buenos Aires", "El Cairo", "Beijing", "Manila", "Delhi", "Jacarta","Tokyo"]
 const to = ciudades.length
 const cantidad_ciudades = 3
 
@@ -24,43 +27,47 @@ function obtener_ciudades_aleatorias(){
     return array_ciudades
 }
 
-
-async function obtener_temperatura(ciudad){
-    let data = `api.openweathermap.org/data/2.5/weather?q={${ciudad}}&appid={050a18086ca65d0d012464b72c6e4d15}`
-    const res = await fetch(data)
-        .then(res => res.main.temp)
-        .catch(err => err)
+/* 
+function obtener_temperatura(ciudad){
+    const endpoint = `api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=050a18086ca65d0d012464b72c6e4d15`
+    respuesta = fetch(endpoint)
+        .then(res => {return res.main.temp})
+        .catch(err => {return err})
 }
+ */
 
-
-const respuesta = {
-    "Ciudad" : ciudades_aleatorias[0],
-    "Temperatura" : obtener_temperatura(ciudades_aleatorias[0]),
-    "Ciudad" : ciudades_aleatorias[1],
-    "Temperatura" : obtener_temperatura(ciudades_aleatorias[1]),
-    "Ciudad" : ciudades_aleatorias[2],
-    "Temperatura" : obtener_temperatura(ciudades_aleatorias[2])
+const obtener_temperatura = async (ciudad)=> {
+    const endpoint = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=050a18086ca65d0d012464b72c6e4d15&units=metric`;
+    const res = await fetch(endpoint);
+    const temp = await res.json();
+    if (res.status !== 200){
+        throw Error(`Algo falló con la ciudad ${ciudad}`)
+    }
+    return temp.main.temp;
 }
-
-
-/* const respuesta = {
-    "Ciudad" : ciudades_aleatorias[0],
-    "Temperatura" : obtener_temperatura(ciudades_aleatorias[0]),
-    "Ciudad" : ciudades_aleatorias[1],
-    "Temperatura" : obtener_temperatura(ciudades_aleatorias[1]),
-    "Ciudad" : ciudades_aleatorias[2],
-    "Temperatura" : obtener_temperatura(ciudades_aleatorias[2])
-} */
 
 //Creo endpoint para recuperar las tres ciudades aleatorias
-app.get("/ciudades", (req,res) => {
-    res.json({respuesta});
+app.get("/ciudades", async (req,res) => {
+        try{
+            let respuesta = {
+                "Ciudad1" : ciudades_aleatorias[0],
+                "Temperatura1" : await obtener_temperatura(ciudades_aleatorias[0]),
+                "Ciudad2" : ciudades_aleatorias[1],
+                "Temperatura2" : await obtener_temperatura(ciudades_aleatorias[1]),
+                "Ciudad3" : ciudades_aleatorias[2],
+                "Temperatura3" : await obtener_temperatura(ciudades_aleatorias[2]),
+            }
+            console.log (ciudades_aleatorias)
+            return res.json({respuesta})
+        } catch (error) {
+            res.json({error})
+            console.log(error);
+        } 
 })
 
 app.get("/",(req,res) => {
-    res.send("Super API que recupera temperaturas de ciudades")
+    res.send('Super API que te da la temperatura de 3 ciudades')
 })
-
 
 app.listen(port, () => {
     console.log(`Servidor iniciado. Escuchando el puerto ${port}.`)
